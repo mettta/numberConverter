@@ -16,14 +16,16 @@ main =
 type alias Model =
   { content : String,
     binaryContent : String,
-    hexContent : String
+    hexContent : String,
+    octalContent : String
   }
 
 model : Model
 model =
   { content = "",
     binaryContent = "",
-    hexContent = ""
+    hexContent = "",
+    octalContent = ""
   }
 
 
@@ -42,7 +44,8 @@ calculateContent : Model -> String -> Model
 calculateContent model newContent = 
   { model |
     binaryContent = convertStringNumberToString newContent 2, 
-    hexContent = convertStringNumberToString newContent 16
+    hexContent = convertStringNumberToString newContent 16,
+    octalContent = convertStringNumberToString newContent 8
   }
 
 convertStringNumberToString : String -> Int -> String
@@ -63,6 +66,7 @@ view model =
     [ input [ placeholder "Number to convert", onInput Change, myStyle ] []
     , div [myStyle] [ text model.binaryContent ]
     , div [myStyle] [ text model.hexContent ]
+    , div [myStyle] [ text model.octalContent ]
     ]
 
 
