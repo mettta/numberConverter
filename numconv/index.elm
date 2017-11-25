@@ -58,15 +58,18 @@ convertStringNumberToString stringNumber radix =
     Err _ -> "error"
 
 formatBinaryContent : String -> String
-formatBinaryContent sourceString = addPaddingString sourceString 4
+formatBinaryContent sourceString = 
+  addCharGroupsToString (addPaddingToString sourceString 4) 4
 
-addPaddingString : String -> Int -> String
-addPaddingString sourceString width = 
+addPaddingToString : String -> Int -> String
+addPaddingToString sourceString width = 
   --todo
   let zeroes = (width - (String.length sourceString) % width) % width
   in String.repeat zeroes "0" ++ sourceString
 
-
+addCharGroupsToString : String -> Int -> String
+addCharGroupsToString sourceString width =
+  sourceString
 
 -- VIEW
 
