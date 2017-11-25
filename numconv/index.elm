@@ -43,7 +43,7 @@ update msg model =
 calculateContent : Model -> String -> Model
 calculateContent model newContent = 
   { model |
-    binaryContent = convertStringNumberToString newContent 2, 
+    binaryContent = formatBinaryContent (convertStringNumberToString newContent 2), 
     hexContent = convertStringNumberToString newContent 16,
     octalContent = convertStringNumberToString newContent 8
   }
@@ -56,7 +56,12 @@ convertStringNumberToString stringNumber radix =
         Ok bin -> bin
         Err _ -> "error"
     Err _ -> "error"
-  
+
+formatBinaryContent : String -> String
+formatBinaryContent sourceString = addPaddingString sourceString 4
+
+addPaddingString : String -> Int -> String
+addPaddingString sourceString width = sourceString
 
 -- VIEW
 
