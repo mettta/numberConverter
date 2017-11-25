@@ -15,13 +15,15 @@ main =
 
 type alias Model =
   { content : String,
-    binaryContent : String
+    binaryContent : String,
+    hexContent : String
   }
 
 model : Model
 model =
   { content = "",
-    binaryContent = ""
+    binaryContent = "",
+    hexContent = ""
   }
 
 
@@ -38,21 +40,19 @@ update msg model =
 
 calculateContent : Model -> String -> Model
 calculateContent model newContent = 
-  case (ParseInt.parseIntRadix 10 newContent) of
+  { model |
+    binaryContent = convertStringNumberToString newContent 2, 
+    hexContent = convertStringNumberToString newContent 16
+  }
+
+convertStringNumberToString : String -> Int -> String
+convertStringNumberToString stringNumber radix = 
+  case (ParseInt.parseIntRadix 10 stringNumber) of
     Ok num -> 
-      case (ParseInt.toRadix 2 num) of
-        Ok bin -> 
-          { model |
-            binaryContent = bin
-          }
-        Err _ -> 
-          { model |
-            binaryContent = "error"
-          }
-    Err _ -> 
-      { model |
-        binaryContent = "error"
-      }
+      case (ParseInt.toRadix radix num) of
+        Ok bin -> bin
+        Err _ -> "error"
+    Err _ -> "error"
   
 
 -- VIEW
@@ -62,6 +62,7 @@ view model =
   div []
     [ input [ placeholder "Number to convert", onInput Change, myStyle ] []
     , div [myStyle] [ text model.binaryContent ]
+    , div [myStyle] [ text model.hexContent ]
     ]
 
 
