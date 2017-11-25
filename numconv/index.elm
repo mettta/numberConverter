@@ -61,7 +61,12 @@ formatBinaryContent : String -> String
 formatBinaryContent sourceString = addPaddingString sourceString 4
 
 addPaddingString : String -> Int -> String
-addPaddingString sourceString width = sourceString
+addPaddingString sourceString width = 
+  --todo
+  let zeroes = (width - (String.length sourceString) % width) % width
+  in String.repeat zeroes "0" ++ sourceString
+
+
 
 -- VIEW
 
