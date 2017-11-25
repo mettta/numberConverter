@@ -23,14 +23,19 @@ var _elm_lang$elm_architecture_tutorial$Main$myStyle = _elm_lang$html$Html_Attri
 var _elm_lang$elm_architecture_tutorial$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
+		var _p1 = _p0._0;
 		return _elm_lang$core$Native_Utils.update(
 			model,
-			{content: _p0._0});
+			{
+				content: _p1,
+				reversedContent: _elm_lang$core$String$reverse(_p1)
+			});
 	});
-var _elm_lang$elm_architecture_tutorial$Main$model = {content: ''};
-var _elm_lang$elm_architecture_tutorial$Main$Model = function (a) {
-	return {content: a};
-};
+var _elm_lang$elm_architecture_tutorial$Main$model = {content: '', reversedContent: ''};
+var _elm_lang$elm_architecture_tutorial$Main$Model = F2(
+	function (a, b) {
+		return {content: a, reversedContent: b};
+	});
 var _elm_lang$elm_architecture_tutorial$Main$Change = function (a) {
 	return {ctor: 'Change', _0: a};
 };
@@ -67,8 +72,7 @@ var _elm_lang$elm_architecture_tutorial$Main$view = function (model) {
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_elm_lang$core$String$reverse(model.content)),
+						_0: _elm_lang$html$Html$text(model.reversedContent),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
