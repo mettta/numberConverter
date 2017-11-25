@@ -22,22 +22,33 @@ var _elm_lang$elm_architecture_tutorial$Main$myStyle = _elm_lang$html$Html_Attri
 	});
 var _elm_lang$elm_architecture_tutorial$Main$calculateContent = F2(
 	function (model, newContent) {
-		return _elm_lang$core$Native_Utils.update(
-			model,
-			{
-				content: '123',
-				reversedContent: _elm_lang$core$String$reverse(newContent)
-			});
+		var _p0 = A2(_fredcy$elm_parseint$ParseInt$parseIntRadix, 10, newContent);
+		if (_p0.ctor === 'Ok') {
+			var _p1 = A2(_fredcy$elm_parseint$ParseInt$toRadix, 2, _p0._0);
+			if (_p1.ctor === 'Ok') {
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{binaryContent: _p1._0});
+			} else {
+				return _elm_lang$core$Native_Utils.update(
+					model,
+					{binaryContent: 'error'});
+			}
+		} else {
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{binaryContent: 'error'});
+		}
 	});
 var _elm_lang$elm_architecture_tutorial$Main$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		return A2(_elm_lang$elm_architecture_tutorial$Main$calculateContent, model, _p0._0);
+		var _p2 = msg;
+		return A2(_elm_lang$elm_architecture_tutorial$Main$calculateContent, model, _p2._0);
 	});
-var _elm_lang$elm_architecture_tutorial$Main$model = {content: '', reversedContent: ''};
+var _elm_lang$elm_architecture_tutorial$Main$model = {content: '', binaryContent: ''};
 var _elm_lang$elm_architecture_tutorial$Main$Model = F2(
 	function (a, b) {
-		return {content: a, reversedContent: b};
+		return {content: a, binaryContent: b};
 	});
 var _elm_lang$elm_architecture_tutorial$Main$Change = function (a) {
 	return {ctor: 'Change', _0: a};
@@ -52,7 +63,7 @@ var _elm_lang$elm_architecture_tutorial$Main$view = function (model) {
 				_elm_lang$html$Html$input,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$placeholder('Text to reverse'),
+					_0: _elm_lang$html$Html_Attributes$placeholder('Number to convert'),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Events$onInput(_elm_lang$elm_architecture_tutorial$Main$Change),
@@ -75,7 +86,7 @@ var _elm_lang$elm_architecture_tutorial$Main$view = function (model) {
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(model.reversedContent),
+						_0: _elm_lang$html$Html$text(model.binaryContent),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}

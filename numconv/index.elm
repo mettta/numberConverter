@@ -15,13 +15,13 @@ main =
 
 type alias Model =
   { content : String,
-    reversedContent : String
+    binaryContent : String
   }
 
 model : Model
 model =
   { content = "",
-    reversedContent = ""
+    binaryContent = ""
   }
 
 
@@ -38,18 +38,30 @@ update msg model =
 
 calculateContent : Model -> String -> Model
 calculateContent model newContent = 
-   { model |
-    content = "123",
-    reversedContent = String.reverse newContent
-   }
+  case (ParseInt.parseIntRadix 10 newContent) of
+    Ok num -> 
+      case (ParseInt.toRadix 2 num) of
+        Ok bin -> 
+          { model |
+            binaryContent = bin
+          }
+        Err _ -> 
+          { model |
+            binaryContent = "error"
+          }
+    Err _ -> 
+      { model |
+        binaryContent = "error"
+      }
+  
 
 -- VIEW
 
 view : Model -> Html Msg
 view model =
   div []
-    [ input [ placeholder "Text to reverse", onInput Change, myStyle ] []
-    , div [myStyle] [ text model.reversedContent ]
+    [ input [ placeholder "Number to convert", onInput Change, myStyle ] []
+    , div [myStyle] [ text model.binaryContent ]
     ]
 
 
