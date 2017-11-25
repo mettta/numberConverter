@@ -33,12 +33,15 @@ type Msg
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Change newContent ->
-      { model | 
-        content = newContent,
-        reversedContent = (String.reverse newContent)
-       }
+    Change newContent -> 
+      calculateContent model newContent
 
+calculateContent : Model -> String -> Model
+calculateContent model newContent = 
+   { model |
+    content = "123",
+    reversedContent = String.reverse newContent
+   }
 
 -- VIEW
 
