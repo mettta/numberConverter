@@ -4,8 +4,11 @@
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
+import List
 import ParseInt
 import String
+
+import Debug
 
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
@@ -65,11 +68,28 @@ addPaddingToString : String -> Int -> String
 addPaddingToString sourceString width = 
   --todo
   let zeroes = (width - (String.length sourceString) % width) % width
+  --todo padLeft 
   in String.repeat zeroes "0" ++ sourceString
+
+listify : Int -> List Int
+listify num = 
+  --let _ = Debug.log "number" num in
+  case num of
+    0 -> [ ]
+    1 -> [ 0 ]
+    _ -> List.append (listify (num - 1)) [ num - 1 ]
 
 addCharGroupsToString : String -> Int -> String
 addCharGroupsToString sourceString width =
-  sourceString
+  --let _ = Debug.log "number" sourceString in
+  let nGroups = (String.length sourceString) // width in
+  let loopList = listify nGroups in
+  --let slices = List.map (\idx -> ParseInt.toRadixUnsafe 10 idx) loopList
+  let slices = 
+    List.map (\idx -> (String.slice (idx*width) (idx*width+width) sourceString)) loopList
+  in
+  String.join " " slices
+
 
 -- VIEW
 
