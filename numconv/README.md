@@ -8,6 +8,8 @@
 - hex field validation
 - octal field validation
 
+- formatting None like None
+
 - editing binary / hex field with formatting preserved
 
 - not formatting errors strings

@@ -49,14 +49,19 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent -> 
-      if foo then
+      calculateContent model newContent
+    DecimalChange newContent -> 
+      if Validation.decimal newContent
+      then
         calculateContent model newContent
       else
-        calculateContent model newContent
-    DecimalChange newContent -> 
-      calculateContent model newContent
+        model
     BinaryChange newContent -> 
-      calculateContent model newContent
+      if Validation.binary newContent
+      then
+        calculateContent model newContent
+      else
+        model
     HexChange newContent -> 
       calculateContent model newContent
     OctalChange newContent -> 
