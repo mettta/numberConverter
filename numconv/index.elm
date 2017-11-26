@@ -101,15 +101,18 @@ view : Model -> Html Msg
 view model =
   div []
     [ input [ placeholder "Number to convert", onInput Change, myStyle ] []
-    , div [myStyle] [ text model.binaryContent ]
-    , div [myStyle] [ text model.hexContent ]
-    , div [myStyle] [ text model.octalContent ]
+    , input [value model.binaryContent, myStyle] []
+    , input [value model.hexContent, myStyle] []
+    , input [value model.octalContent, myStyle] []
     ]
 
 
 myStyle =
   style
-    [ ("width", "100%")
+    [ ("display", "block")
+    , ("width", "80%")
+    , ("max-width", "800px")
+    , ("margin", "10px auto")
     , ("height", "40px")
     , ("padding", "10px 0")
     , ("font-size", "2em")
