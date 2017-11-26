@@ -18,6 +18,7 @@ main =
 
 type alias Model =
   { content : String,
+    decimalContent : String,
     binaryContent : String,
     hexContent : String,
     octalContent : String
@@ -26,6 +27,7 @@ type alias Model =
 model : Model
 model =
   { content = "",
+    decimalContent = "",
     binaryContent = "",
     hexContent = "",
     octalContent = ""
@@ -36,16 +38,29 @@ model =
 
 type Msg
   = Change String
+  | DecimalChange String
+  | BinaryChange String
+  | HexChange String
+  | OctalChange String
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent -> 
       calculateContent model newContent
+    DecimalChange newContent -> 
+      calculateContent model newContent
+    BinaryChange newContent -> 
+      calculateContent model newContent
+    HexChange newContent -> 
+      calculateContent model newContent
+    OctalChange newContent -> 
+      calculateContent model newContent
 
 calculateContent : Model -> String -> Model
 calculateContent model newContent = 
   { model |
+    decimalContent = newContent,
     binaryContent = formatContent (convertStringNumberToString newContent 2) 4, 
     hexContent = formatContent (convertStringNumberToString newContent 16) 2,
     octalContent = convertStringNumberToString newContent 8
@@ -96,10 +111,11 @@ addCharGroupsToString sourceString width =
 view : Model -> Html Msg
 view model =
   div []
-    [ input [ placeholder "Number", onInput Change, myStyle ] []
-    , input [ placeholder "Binary", value model.binaryContent, myStyle] []
-    , input [ placeholder "Hex", value model.hexContent, myStyle] []
-    , input [ placeholder "Octal", value model.octalContent, myStyle] []
+    [ input [ placeholder "???", onInput Change, myStyle ] []
+    , input [ placeholder "Decimal", onInput DecimalChange, value model.decimalContent, myStyle ] []
+    , input [ placeholder "Binary", onInput BinaryChange, value model.binaryContent, myStyle] []
+    , input [ placeholder "Hex", onInput HexChange, value model.hexContent, myStyle] []
+    , input [ placeholder "Octal", onInput OctalChange, value model.octalContent, myStyle] []
     ]
 
 
