@@ -47,8 +47,7 @@ calculateContent : Model -> String -> Model
 calculateContent model newContent = 
   { model |
     binaryContent = formatContent (convertStringNumberToString newContent 2) 4, 
-    hexContent = 
-      addHeadToHexString (formatContent (convertStringNumberToString newContent 16) 2),
+    hexContent = formatContent (convertStringNumberToString newContent 16) 2,
     octalContent = convertStringNumberToString newContent 8
   }
 
@@ -91,19 +90,16 @@ addCharGroupsToString sourceString width =
   in
   String.join " " slices
 
-addHeadToHexString : String -> String
-addHeadToHexString sourceString = String.append "0x " sourceString
-
 
 -- VIEW
 
 view : Model -> Html Msg
 view model =
   div []
-    [ input [ placeholder "Number to convert", onInput Change, myStyle ] []
-    , input [value model.binaryContent, myStyle] []
-    , input [value model.hexContent, myStyle] []
-    , input [value model.octalContent, myStyle] []
+    [ input [ placeholder "Number", onInput Change, myStyle ] []
+    , input [ placeholder "Binary", value model.binaryContent, myStyle] []
+    , input [ placeholder "Hex", value model.hexContent, myStyle] []
+    , input [ placeholder "Octal", value model.octalContent, myStyle] []
     ]
 
 
