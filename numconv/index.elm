@@ -10,6 +10,8 @@ import String
 
 import Debug
 
+import Validation
+
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
 
@@ -47,7 +49,10 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent -> 
-      calculateContent model newContent
+      if foo then
+        calculateContent model newContent
+      else
+        calculateContent model newContent
     DecimalChange newContent -> 
       calculateContent model newContent
     BinaryChange newContent -> 
@@ -104,6 +109,7 @@ addCharGroupsToString sourceString width =
     List.map (\idx -> (String.slice (idx*width) (idx*width+width) sourceString)) loopList
   in
   String.join " " slices
+
 
 
 -- VIEW
