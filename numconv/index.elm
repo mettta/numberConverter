@@ -47,9 +47,14 @@ calculateContent : Model -> String -> Model
 calculateContent model newContent = 
   { model |
     binaryContent = formatContent (convertStringNumberToString newContent 2) 4, 
-    hexContent = formatContent (convertStringNumberToString newContent 16) 2,
+    hexContent = 
+      addHeadToHexString (formatContent (convertStringNumberToString newContent 16) 2),
     octalContent = convertStringNumberToString newContent 8
   }
+
+formatContent : String -> Int -> String
+formatContent sourceString width = 
+  addCharGroupsToString (addPaddingToString sourceString width) width
 
 convertStringNumberToString : String -> Int -> String
 convertStringNumberToString stringNumber radix = 
@@ -59,10 +64,6 @@ convertStringNumberToString stringNumber radix =
         Ok bin -> bin
         Err _ -> "error"
     Err _ -> "error"
-
-formatContent : String -> Int -> String
-formatContent sourceString width = 
-  addCharGroupsToString (addPaddingToString sourceString width) width
 
 addPaddingToString : String -> Int -> String
 addPaddingToString sourceString width = 
@@ -89,6 +90,9 @@ addCharGroupsToString sourceString width =
     List.map (\idx -> (String.slice (idx*width) (idx*width+width) sourceString)) loopList
   in
   String.join " " slices
+
+addHeadToHexString : String -> String
+addHeadToHexString sourceString = String.append "0x " sourceString
 
 
 -- VIEW
