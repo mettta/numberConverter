@@ -11,6 +11,7 @@ import String
 import Debug
 
 import Validation
+import Formatting
 
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
@@ -33,6 +34,28 @@ model =
     binaryContent = "",
     hexContent = "",
     octalContent = ""
+  }
+
+
+-- Functions for UPDATE
+
+convertStringNumberToString : String -> Int -> Int -> String
+convertStringNumberToString stringNumber fromradix radix = 
+  case (ParseInt.parseIntRadix 10 stringNumber) of
+    Ok num -> 
+      case (ParseInt.toRadix radix num) of
+        Ok bin -> bin
+        Err _ -> "error"
+    Err _ -> "error"
+
+
+calculateContent : Model -> String -> Model
+calculateContent model newContent = 
+  { model |
+    decimalContent = newContent,
+    binaryContent = Formatting.formatContent (convertStringNumberToString newContent 13 2) 4, 
+    hexContent = Formatting.formatContent (convertStringNumberToString newContent 13 16) 2,
+    octalContent = convertStringNumberToString newContent 13 8
   }
 
 
@@ -66,55 +89,6 @@ update msg model =
       calculateContent model newContent
     OctalChange newContent -> 
       calculateContent model newContent
-
-calculateContent : Model -> String -> Model
-calculateContent model newContent = 
-  { model |
-    decimalContent = newContent,
-    binaryContent = formatContent (convertStringNumberToString newContent 13 2) 4, 
-    hexContent = formatContent (convertStringNumberToString newContent 13 16) 2,
-    octalContent = convertStringNumberToString newContent 13 8
-  }
-
-formatContent : String -> Int -> String
-formatContent sourceString width = 
-  addCharGroupsToString (addPaddingToString sourceString width) width
-
-convertStringNumberToString : String -> Int -> Int -> String
-convertStringNumberToString stringNumber fromradix radix = 
-  case (ParseInt.parseIntRadix 10 stringNumber) of
-    Ok num -> 
-      case (ParseInt.toRadix radix num) of
-        Ok bin -> bin
-        Err _ -> "error"
-    Err _ -> "error"
-
-addPaddingToString : String -> Int -> String
-addPaddingToString sourceString width = 
-  --todo
-  let zeroes = (width - (String.length sourceString) % width) % width
-  --todo padLeft 
-  in String.repeat zeroes "0" ++ sourceString
-
-listify : Int -> List Int
-listify num = 
-  --let _ = Debug.log "number" num in
-  case num of
-    0 -> [ ]
-    1 -> [ 0 ]
-    _ -> List.append (listify (num - 1)) [ num - 1 ]
-
-addCharGroupsToString : String -> Int -> String
-addCharGroupsToString sourceString width =
-  --let _ = Debug.log "number" sourceString in
-  let nGroups = (String.length sourceString) // width in
-  let loopList = listify nGroups in
-  --let slices = List.map (\idx -> ParseInt.toRadixUnsafe 10 idx) loopList
-  let slices = 
-    List.map (\idx -> (String.slice (idx*width) (idx*width+width) sourceString)) loopList
-  in
-  String.join " " slices
-
 
 
 -- VIEW
