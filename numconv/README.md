@@ -3,6 +3,8 @@
 
 ## ROADMAP
 
+- different flows for updatings ...
+
 - decimal field validation
 - binary field validation
 - hex field validation
