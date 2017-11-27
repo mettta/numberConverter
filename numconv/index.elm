@@ -40,20 +40,20 @@ model =
 -- Functions for UPDATE
 
 convertStringNumberToString : String -> Int -> Int -> String
-convertStringNumberToString stringNumber fromradix toradix = 
+convertStringNumberToString stringNumber fromradix toradix =
   case (ParseInt.parseIntRadix 10 stringNumber) of
-    Ok num -> 
+    Ok num ->
       case (ParseInt.toRadix toradix num) of
         Ok bin -> bin
         Err _ -> "error"
     Err _ -> "error"
 
 
-calculateContent : Model -> String -> Model
-calculateContent model newContent = 
+calculateContent : Model -> String -> Int -> Model
+calculateContent model newContent fromradix =
   { model |
     decimalContent = newContent,
-    binaryContent = Formatting.formatContent (convertStringNumberToString newContent 13 2) 4, 
+    binaryContent = Formatting.formatContent (convertStringNumberToString newContent 13 2) 4,
     hexContent = Formatting.formatContent (convertStringNumberToString newContent 13 16) 2,
     octalContent = convertStringNumberToString newContent 13 8
   }
@@ -71,24 +71,24 @@ type Msg
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Change newContent -> 
-      calculateContent model newContent
-    DecimalChange newContent -> 
+    Change newContent ->
+      calculateContent model newContent 13
+    DecimalChange newContent ->
       if Validation.decimal newContent
       then
-        calculateContent model newContent
+        calculateContent model newContent 10
       else
         model
-    BinaryChange newContent -> 
+    BinaryChange newContent ->
       if Validation.binary newContent
       then
-        calculateContent model newContent
+        calculateContent model newContent 2
       else
         model
-    HexChange newContent -> 
-      calculateContent model newContent
-    OctalChange newContent -> 
-      calculateContent model newContent
+    HexChange newContent ->
+      calculateContent model newContent 16
+    OctalChange newContent ->
+      calculateContent model newContent 8
 
 
 -- VIEW
