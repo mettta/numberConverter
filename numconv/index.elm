@@ -41,7 +41,7 @@ model =
 
 convertStringNumberToString : String -> Int -> Int -> String
 convertStringNumberToString stringNumber fromradix toradix =
-  case (ParseInt.parseIntRadix fromradix stringNumber) of
+  case (ParseInt.parseIntRadix fromradix (Formatting.clearF stringNumber)) of
     Ok num ->
       case (ParseInt.toRadix toradix num) of
         Ok bin -> bin
