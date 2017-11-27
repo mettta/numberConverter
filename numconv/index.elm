@@ -41,7 +41,7 @@ model =
 
 convertStringNumberToString : String -> Int -> Int -> String
 convertStringNumberToString stringNumber fromradix toradix =
-  case (ParseInt.parseIntRadix 10 stringNumber) of
+  case (ParseInt.parseIntRadix fromradix stringNumber) of
     Ok num ->
       case (ParseInt.toRadix toradix num) of
         Ok bin -> bin
@@ -52,10 +52,14 @@ convertStringNumberToString stringNumber fromradix toradix =
 calculateContent : Model -> String -> Int -> Model
 calculateContent model newContent fromradix =
   { model |
-    decimalContent = newContent,
-    binaryContent = Formatting.formatContent (convertStringNumberToString newContent 13 2) 4,
-    hexContent = Formatting.formatContent (convertStringNumberToString newContent 13 16) 2,
-    octalContent = convertStringNumberToString newContent 13 8
+    decimalContent =
+      convertStringNumberToString newContent fromradix 10,
+    binaryContent =
+      Formatting.formatContent (convertStringNumberToString newContent fromradix 2) 4,
+    hexContent =
+      Formatting.formatContent (convertStringNumberToString newContent fromradix 16) 2,
+    octalContent =
+      convertStringNumberToString newContent fromradix 8
   }
 
 
