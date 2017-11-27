@@ -40,10 +40,10 @@ model =
 -- Functions for UPDATE
 
 convertStringNumberToString : String -> Int -> Int -> String
-convertStringNumberToString stringNumber fromradix radix = 
+convertStringNumberToString stringNumber fromradix toradix = 
   case (ParseInt.parseIntRadix 10 stringNumber) of
     Ok num -> 
-      case (ParseInt.toRadix radix num) of
+      case (ParseInt.toRadix toradix num) of
         Ok bin -> bin
         Err _ -> "error"
     Err _ -> "error"
