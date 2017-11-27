@@ -76,7 +76,7 @@ update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent ->
-      calculateContent model newContent 13
+      calculateContent model newContent 10
     DecimalChange newContent ->
       if Validation.decimal newContent
       then
