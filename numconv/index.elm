@@ -23,8 +23,8 @@ type alias Model =
   { content : String,
     decimalContent : String,
     binaryContent : String,
-    hexContent : String,
-    octalContent : String
+    octalContent : String,
+    hexContent : String
   }
 
 model : Model
@@ -32,8 +32,8 @@ model =
   { content = "",
     decimalContent = "",
     binaryContent = "",
-    hexContent = "",
-    octalContent = ""
+    octalContent = "",
+    hexContent = ""
   }
 
 
@@ -69,8 +69,8 @@ type Msg
   = Change String
   | DecimalChange String
   | BinaryChange String
-  | HexChange String
   | OctalChange String
+  | HexChange String
 
 update : Msg -> Model -> Model
 update msg model =
@@ -89,11 +89,18 @@ update msg model =
         calculateContent model newContent 2
       else
         model
-    HexChange newContent ->
-      calculateContent model newContent 16
     OctalChange newContent ->
-      calculateContent model newContent 8
-
+      if Validation.octal newContent
+      then
+        calculateContent model newContent 8
+      else
+        model
+    HexChange newContent ->
+      if Validation.hex newContent
+      then
+        calculateContent model newContent 16
+      else
+        model
 
 -- VIEW
 
@@ -103,8 +110,8 @@ view model =
     [ input [ placeholder "???", onInput Change, myStyle ] []
     , input [ placeholder "Decimal", onInput DecimalChange, value model.decimalContent, myStyle ] []
     , input [ placeholder "Binary", onInput BinaryChange, value model.binaryContent, myStyle] []
-    , input [ placeholder "Hex", onInput HexChange, value model.hexContent, myStyle] []
     , input [ placeholder "Octal", onInput OctalChange, value model.octalContent, myStyle] []
+    , input [ placeholder "Hex", onInput HexChange, value model.hexContent, myStyle] []
     ]
 
 
