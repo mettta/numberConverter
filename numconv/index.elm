@@ -71,17 +71,17 @@ calculateContent : Model -> String -> Model
 calculateContent model newContent = 
   { model |
     decimalContent = newContent,
-    binaryContent = formatContent (convertStringNumberToString newContent 2) 4, 
-    hexContent = formatContent (convertStringNumberToString newContent 16) 2,
-    octalContent = convertStringNumberToString newContent 8
+    binaryContent = formatContent (convertStringNumberToString newContent 13 2) 4, 
+    hexContent = formatContent (convertStringNumberToString newContent 13 16) 2,
+    octalContent = convertStringNumberToString newContent 13 8
   }
 
 formatContent : String -> Int -> String
 formatContent sourceString width = 
   addCharGroupsToString (addPaddingToString sourceString width) width
 
-convertStringNumberToString : String -> Int -> String
-convertStringNumberToString stringNumber radix = 
+convertStringNumberToString : String -> Int -> Int -> String
+convertStringNumberToString stringNumber fromradix radix = 
   case (ParseInt.parseIntRadix 10 stringNumber) of
     Ok num -> 
       case (ParseInt.toRadix radix num) of
