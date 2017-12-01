@@ -107,38 +107,29 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ input [ placeholder "???", onInput Change, myStyle ] []
-    , label [ labelStyle ] [ text "not specific"]
-    , input [ placeholder "Decimal", onInput DecimalChange, value model.decimalContent, myStyle ] []
-    , label [ labelStyle ] [ text "Decimal"]
-    , input [ placeholder "Binary", onInput BinaryChange, value model.binaryContent, myStyle] []
-    , label [ labelStyle ] [ text "Binary"]
-    , input [ placeholder "Octal", onInput OctalChange, value model.octalContent, myStyle] []
-    , label [ labelStyle ] [ text "Octal"]
-    , input [ placeholder "Hex", onInput HexChange, value model.hexContent, myStyle] []
-    , label [ labelStyle ] [ text "Hex"]
+    [ input [ placeholder "???",
+              required True,
+              onInput Change ] []
+    , label [] [ text "not specific" ]
+    , input [ placeholder "Decimal",
+              required True,
+              onInput DecimalChange,
+              value model.decimalContent] []
+    , label [] [ text "Decimal" ]
+    , input [ placeholder "Binary",
+              required True,
+              onInput BinaryChange,
+              value model.binaryContent] []
+    , label [] [ text "Binary" ]
+    , input [ placeholder "Octal",
+              required True,
+              onInput OctalChange,
+              value model.octalContent] []
+    , label [] [ text "Octal" ]
+    , input [ placeholder "Hex",
+              required True,
+              onInput HexChange,
+              value model.hexContent] []
+    , label [] [ text "Hex" ]
     ]
 
-
-myStyle =
-  style
-    [ ("display", "block")
-    , ("width", "80%")
-    , ("max-width", "800px")
-    , ("margin", "40px auto -20px")
-    , ("height", "40px")
-    , ("padding", "10px 0")
-    , ("font-size", "2em")
-    , ("text-align", "center")
-    ]
-labelStyle =
-  style
-    [ ("display", "block")
-    , ("width", "200px")
-    , ("margin", "0 auto 0")
-    , ("position", "relative")
-    , ("top", "-66px")
-    , ("font-size", "1em")
-    , ("text-align", "center")
-    , ("color", "#ccc")
-    ]

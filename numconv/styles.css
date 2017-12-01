@@ -1,0 +1,30 @@
+input {
+	display: block;
+	width: 80%;
+	max-width: 800px;
+	margin: 3rem auto -2rem;
+	height: 3.5rem;
+	padding: 0.5rem 0;
+	font-size: 2rem;
+	line-height: 1;
+	text-align: center;
+}
+
+label {
+	transition: all .3s linear;
+	font-family: sans-serif;
+	display: block;
+	width: 200px;
+	margin: 0 auto 0;
+	position: relative;
+	top: -2rem;
+	font-size: 0.66rem;
+	/*font-weight: normal;*/
+	text-transform: uppercase;
+	letter-spacing: 6px;
+	text-align: center;
+	color: #ccc;
+}
+
+input:invalid + label { top:-2rem; opacity:0; }
+input:valid + label { opacity:1; top:-2.5rem; }
