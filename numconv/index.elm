@@ -108,11 +108,6 @@ view : Model -> Html Msg
 view model =
   div [class "numconv"]
     [ p [] [ text "Enter a number to convert:" ]
-
-    , input [ placeholder "???",
-              required True,
-              onInput Change ] []
-    , label [] [ text "not specific" ]
     , input [ placeholder "Decimal",
               required True,
               onInput DecimalChange,
@@ -133,5 +128,9 @@ view model =
               onInput HexChange,
               value model.hexContent] []
     , label [] [ text "Hex" ]
+    --, input [ placeholder "???",
+    --      required True,
+    --      onInput Change ] []
+    --, label [] [ text "not specific" ]
     ]
 
