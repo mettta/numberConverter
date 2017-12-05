@@ -106,8 +106,10 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  div []
-    [ input [ placeholder "???",
+  div [class "numconv"]
+    [ p [] [ text "Enter a number to convert:" ]
+
+    , input [ placeholder "???",
               required True,
               onInput Change ] []
     , label [] [ text "not specific" ]
