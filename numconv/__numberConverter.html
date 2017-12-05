@@ -1,0 +1,22 @@
+<html>
+
+        <head>
+                <meta charset="UTF-8">
+                <title>Number Converter</title>
+                <link rel="stylesheet" href="styles.css">
+        </head>
+
+        <body>
+                <div id="numberConverter"></div>
+        </body>
+
+        <!-- Put the name of your app here (my sources place in `src` forder) -->
+        <script type="text/javascript" src="numberConverter.js"></script>
+
+        <!-- Removes splash and starts elm app. -->
+        <script type="text/javascript">
+             var node = document.getElementById('numberConverter');
+              var app = Elm.numberConverter.embed(node);
+        </script>
+
+</html>
